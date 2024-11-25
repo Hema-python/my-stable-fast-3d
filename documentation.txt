@@ -1,0 +1,146 @@
+Task 1: Documenting the Steps to Install and Run the Open-Source AI Project
+Overview
+The task involved setting up the open-source AI project from the Stability-AI repository stable-fast-3d to run offline on a local machine. Below are the steps taken,
+________________________________________
+Steps Taken
+Step 1: Clone the Repository
+1.	Open a terminal and clone the repository:
+git clone https://github.com/Stability-AI/stable-fast-3d.git
+2.	Navigate to the project directory:
+cd stable-fast-3d
+________________________________________
+Step 2: Set Up a Virtual Environment
+1.	Creating and activating a virtual environment 
+python -m venv venv
+venv\Scripts\activate      
+2.	Upgrade pip:
+pip install --upgrade pip
+________________________________________
+Step 3: Install Dependencies
+1.	Install dependencies listed in requirements.txt:
+pip install -r requirements.txt
+2.	Resolve missing dependencies by installing additional modules:
+o	Missing Module Errors: Installed missing packages manually (e.g., onnxruntime,rembg,torch,trimesh, etc.)
+pip install torch rembg open-clip-torch
+o	Challenges Faced:
+	Errors in downloading/installing specific modules.
+	Dependency build issues for wheels (subprocess-exited-with-error).
+o	Resolutions:
+	Used alternative installation commands 
+cd texture_baker
+pip install texture_baker
+.
+________________________________________
+Step 4: Authenticate HuggingFace Access
+1.	The project required authentication to access gated resources on HuggingFace. After signing up for Huggingface
+      
+o	Generated an API token from HuggingFace Settings.
+o	Logged in via the terminal:
+huggingface-cli login
+________________________________________
+Step 5: Run the Project
+1.	Ran the provided script run.py to process an image:
+python run.py image.jpg
+2.	Encountered errors related to missing files or incorrect paths:
+o	Resolved by ensuring the correct input file paths and downloading missing resources (e.g., u2net.onnx).
+o	Adjusted paths for resources, such as model checkpoints, using:
+--pretrained-model path/to/model
+
+
+
+
+________________________________________
+Challenges Faced and Resolutions
+Challenge	Resolution
+Missing dependencies (rembg)	Installed the required module manually using pip install rembg.
+Wheel build errors	Used compatible module versions or pre-built wheels, e.g., for texture_baker.
+Authentication for HuggingFace API	Generated an access token and authenticated via huggingface-cli login.
+Restricted resource access	Configured the API token to ensure the project could download required files like config.yaml and models.
+Path-related errors	Checked and provided the correct path to input files and output directories in the script arguments.
+	
+________________________________________
+
+Optimizations and Improvements
+1.	Optimized Installation:
+o	Used pre-built wheels for faster installation where possible.
+2.	Configured for Offline Use:
+o	Pre-downloaded resources (e.g., models and configuration files) to avoid runtime failures.
+3.	Batch Size Adjustment:
+o	Adjusted the batch size to improve processing speed on the CPU:
+   --batch_size 1
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+Task 2 : Documentation: One-Click Installer for Stable-Fast-3D
+Objective:
+The goal of this task was to create a one-click installer that automates the setup process of the Stable-Fast-3D project. This includes installing all necessary Python libraries, configuring the environment, ensuring offline functionality, and enabling the system to run with minimal user input.Below are the steps,.
+________________________________________
+1. Project Structure
+The project was structured as follows:
+stable-fast-3d/
+├── run.py                       
+├── requirements.txt             
+├── offline_assets/             
+│   ├── u2net.onnx               
+│   ├── open_clip_pytorch_model.bin 
+│   └── config.yaml              
+├── install.bat                  
+                 
+________________________________________
+2. Steps to Create the One-Click Installer
+Step 1: Install All Required Python Libraries
+List all python dependencies and resources in requirements.txt file. Using command 
+pip freeze > requirements.txt 
+ and other resources are manually downloaded and placed in the offline_assets/ folder to ensure offline functionality
+
+Step 2: Set Up Environment Variables
+To configure the environment, a virtual environment (venv) was created using the python -m venv venv command. 
+After activating the virtual environment, the install.bat script was created to:
+•	Install the dependencies using pip install -r requirements.txt.
+•	Set up environment variables 
+Example of the environment setup in install.bat:
+Create a virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+
+pip install -r requirements.txt
+Step 3: Ensure Offline Functionality
+The following resources were bundled into the installer:
+•	u2net.onnx 
+•	open_clip_pytorch_model.bin 
+•	config.yaml 
+These files were placed in the offline_assets/ folder .
+Step 4: Run on Any Machine with Minimal User Input
+Then install.bat script was created.
+The installer required minimal user input and was designed to handle all the setup tasks automatically.
+________________________________________
+3. Challenges Encountered
+•	Installing dependencies: Some dependencies required a manual installation (e.g., rembg), which was resolved by adding them to the requirements.txt file or installing them manually via pip install rembg.
+•	Ensuring offline functionality: Ensuring that all were bundled and accessible offline required manual downloading and careful folder organization.
+________________________________________
+4. Key Lessons Learned
+•	Use of virtual environments: Setting up a virtual environment helps avoid conflicts with other projects and makes the installation process more isolated and predictable.
+•	Ensuring offline functionality: Bundling resources locally and ensuring that they are correctly referenced in the code avoids issues where the user might not have an internet connection during setup.
+•	Batch scripts for Windows users: Batch scripts (.bat files) are helpful for automating installation on Windows systems. For cross-platform compatibility, shell scripts (.sh files) could also be created.
+•	Test thoroughly: Thorough testing on different machines and configurations ensures that the installer works smoothly on various environments.
+________________________________________
+5. Final Code Submission
+The repository now includes:
+•	A working install.bat script for Windows users to automate the setup process.
+•	A requirements.txt file with the necessary Python libraries.
+•	The offline_assets/ folder with all the required external resources to ensure offline functionality.
+________________________________________
+7. Conclusion
+The one-click installer provides an easy and automated way to set up the Stable-Fast-3D project with minimal user input. The installation process now involves only a few clicks, ensuring that the project can run even without an internet connection.
+________________________________________
+
